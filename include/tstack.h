@@ -5,19 +5,19 @@
 template<typename T, int size>
 class TStack {
  private:
+    static const int kSize = size
 	T data[size];
 	int topIndex;
 
  public:
 	TStack() : topIndex(-1) {}
 
-	void push(const T& value){
-		if (topIndex < size - 1) {
+	void push(const T& value) {
+		if (topIndex < kSize - 1) {
 			data[++topIndex] = value;
 		}
 	}
-
-	T pop(){
+	T pop() {
 		if (!isEmpty()) {
 			return data[topIndex--];
 		}
