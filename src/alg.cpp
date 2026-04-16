@@ -1,8 +1,9 @@
 // Copyright 2025 NNTU-CS
+#include "alg.h"
+#include <cctype>
 #include <string>
 #include <map>
 #include "tstack.h"
-#include <cctype>
 
 static int precedent(char op) {
     if (op == '+' || op == '-') return 1;
@@ -21,27 +22,24 @@ std::string infx2pstfx(const std::string& inf) {
         char c = inf[i];
 
         if (std::isdigit(c)) {
-            while (i < inf.length() && std::isdigit(inf[i])) {
-                output += inf[i];
-                i++;
-            }
-            output += ' ';
-            --i;
-        }
-        else if (c == '(') {
+        while (i < inf.length() && std::isdigit(inf[i])) {
+            output += inf[i];
+            i++;
+          }
+          output += ' ';
+          --i;
+        } else if (c == '(') {
             stack.push(c);
-        }
-        else if (c == ')') {
-            while (!stack.isEmpty() && stack.top() != '('){
+        } else if (c == ')') {
+            while (!stack.isEmpty() && stack.top() != '(') {
                 output += stack.pop();
                 output += ' ';
             }
             if (!stack.isEmpty() && stack.top() == '(') {
                 stack.pop();
             }
-        }
-        else if (isOperation(c)){
-            while (!stack.isEmpty() && stack.top() != '(' && 
+        } else if (isOperation(c)) {
+            while (!stack.isEmpty() && stack.top() != '(' &&
                 precedent(c) <= precedent(stack.top())) {
                 output += stack.pop();
                 output += ' ';
@@ -76,8 +74,7 @@ int eval(const std::string& pref) {
             }
             i--;
             stack.push(num);
-        }
-        else if (isOperation(c)) {
+        } else if (isOperation(c)) {
             int b = stack.pop();
             int a = stack.pop();
             int result = 0;
@@ -92,4 +89,3 @@ int eval(const std::string& pref) {
     }
     return stack.pop();
 }
-
