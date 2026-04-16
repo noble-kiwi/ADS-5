@@ -42,7 +42,7 @@ std::string infx2pstfx(const std::string& inf) {
         }
         else if (isOperation(c)){
             while (!stack.isEmpty() && stack.top() != '(' && 
-                precedence(c) <= precedence(stack.top())) {
+                precedent(c) <= precedent(stack.top())) {
                 output += stack.pop();
                 output += ' ';
             }
@@ -77,7 +77,7 @@ int eval(const std::string& pref) {
             i--;
             stack.push(num);
         }
-        else if (isOperator(c)) {
+        else if (isOperation(c)) {
             int b = stack.pop();
             int a = stack.pop();
             int result = 0;
