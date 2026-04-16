@@ -23,17 +23,17 @@ class TStack {
   return T();
   }
   T top() const {
-	if (!isEmpty()) {
-	  return data[topIndex];
-	}
-	return T();
+    if (!isEmpty()) {
+      return data[topIndex];
+  }
+  return T();
   }
 
   bool isEmpty() const {
     return topIndex == -1;
   }
   bool isFull() const {
-	return topIndex == size - 1;
+    return topIndex == size - 1;
   }
 };
 
