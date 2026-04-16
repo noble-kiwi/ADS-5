@@ -11,12 +11,12 @@ static int precedent(char op) {
 }
 
 static bool isOperation(char c) {
-    return c == ' +' || c == '-' || c == '*' || c == '/';
+    return c == '+' || c == '-' || c == '*' || c == '/';
 }
 
 std::string infx2pstfx(const std::string& inf) {
     std::string output;
-    TStack<char, 100>stack;
+    TStack<char, 100> stack;
     for (size_t i = 0; i < inf.length(); i++) {
         char c = inf[i];
 
@@ -26,23 +26,35 @@ std::string infx2pstfx(const std::string& inf) {
                 i++;
             }
             output += ' ';
-            i--;
+            --i;
         }
         else if (c == '(') {
             stack.push(c);
         }
         else if (c == ')') {
-            while (!stack.isEmpty() && stack.top != '(') {
+            while (!stack.isEmpty() && stack.top() != '('){
+                output += stack.pop();
+                output += ' ';
+            }
+            if (!stack.isEmpty() && stack.top() == '(') {
+                stack.pop();
+            }
+        }
+        else if (isOperation(c)){
+            while (!stack.isEmpty() && stack.top() != '(' && 
+                precedence(c) <= precedence(stack.top())) {
                 output += stack.pop();
                 output += ' ';
             }
             stack.push(c);
         }
     }
+
     while (!stack.isEmpty()) {
         output += stack.pop();
         output += ' ';
     }
+
     if (!output.empty() && output.back() == ' ') {
         output.pop_back();
     }
@@ -66,8 +78,8 @@ int eval(const std::string& pref) {
             stack.push(num);
         }
         else if (isOperator(c)) {
-            int a = stack.pop();
             int b = stack.pop();
+            int a = stack.pop();
             int result = 0;
             switch (c) {
             case '+': result = a + b; break;
@@ -80,3 +92,4 @@ int eval(const std::string& pref) {
     }
     return stack.pop();
 }
+
