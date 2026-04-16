@@ -4,11 +4,11 @@
 
 template<typename T, int size>
 class TStack {
-private:
+ private:
 	T data[size];
 	int topIndex;
 
-public:
+ public:
 	TStack() : topIndex(-1) {}
 
 	void push(const T& value){
@@ -39,4 +39,4 @@ public:
 	 }
 };
 
-#endif
+#endif // INCLUDE_TSTACK_H_
