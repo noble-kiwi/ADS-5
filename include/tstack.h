@@ -31,7 +31,7 @@ public:
 		return T();
 	}
 
-	bool is Empty() const {
+	bool isEmpty() const {
 		return topIndex == -1;
 	}
 	bool isFull() const {
